@@ -12,7 +12,7 @@
 - **Guest OS**: Ubuntu Server 24.04 LTS
 
 ## Этапы обучения
-- [ ] Stage 01: Linux & Bash
+- [x] Stage 01: Linux & Bash
 - [ ] Stage 02: Git & Networking
 - [ ] Stage 03: Docker
 - [ ] Stage 04: Kubernetes
