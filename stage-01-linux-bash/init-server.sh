@@ -18,6 +18,7 @@ sudo ufw default allow outgoing
 sudo ufw allow ssh      # Порт 22
 sudo ufw allow 80/tcp   # HTTP
 sudo ufw allow 443/tcp  # HTTPS
+sudo ufw allow 8080/tcp # Python HTTP Server (для тестовых приложений)
 echo "y" | sudo ufw enable
 
 echo "Выполнена базовая настройка"
