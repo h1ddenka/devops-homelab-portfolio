@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    app: homelab-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homelab-webapp
+  template:
+    metadata:
+      labels:
+        app: homelab-webapp
+    spec:
+      containers:
+        - name: webapp
+          # Используем локальный образ
+          image: homelab-webapp:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          # Пробы
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
