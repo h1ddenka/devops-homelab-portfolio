@@ -13,7 +13,7 @@
 
 ## Этапы обучения
 - [x] Stage 01: Linux & Bash
-- [ ] Stage 02: Git & Networking
+- [x] Stage 02: Git & Networking
 - [ ] Stage 03: Docker
 - [ ] Stage 04: Kubernetes
 - [ ] Stage 05: IaC (Ansible, Terraform)
