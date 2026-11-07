@@ -42,7 +42,7 @@
         mode: '0600'
       notify: Apply netplan
 
-      - name: Configure UFW firewall rules
+    - name: Configure UFW firewall rules
       "community.general.ufw":
         rule: allow
         port: "{{ item }}"
