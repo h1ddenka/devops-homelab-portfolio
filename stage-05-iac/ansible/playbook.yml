@@ -1,16 +1,16 @@
 ---
 - name: Configure Homelab Ubuntu Server
   hosts: homelab
-  gather_facts: yes
+  gather_facts: true
 
   tasks:
     - name: Update apt cache
-      apt:
-        update_cache: yes
+      ansible.builtin.apt:
+        update_cache: true
         cache_valid_time: 3600
 
     - name: Install base prerequisites
-      apt:
+      ansible.builtin.apt:
         name:
           - curl
           - gnupg
@@ -19,7 +19,7 @@
         state: present
 
     - name: Configure static IP via Netplan
-      copy:
+      ansible.builtin.copy:
         dest: /etc/netplan/99-static-ip.yaml
         content: |
           network:
@@ -27,7 +27,7 @@
             renderer: networkd
             ethernets:
               ens33:
-                dhcp4: no
+                dhcp4: false
                 addresses:
                   - 192.168.227.128/24
                 routes:
@@ -39,46 +39,62 @@
                     - 1.1.1.1
         owner: root
         group: root
-        mode: '0600'
+        mode: "0600"
       notify: Apply netplan
 
     - name: Configure UFW firewall rules
-      ufw:
+      community.general.ufw:
         rule: allow
         port: "{{ item }}"
         proto: tcp
       loop:
-        - 22
-        - 80
-        - 443
-        - 30080
-        - 8080
+        - "22"
+        - "80"
+        - "443"
+        - "30080"
+        - "8080"
 
     - name: Enable UFW with default deny policy
-      ufw:
+      community.general.ufw:
         state: enabled
         policy: deny
 
+    - name: Download Docker installation script
+      ansible.builtin.get_url:
+        url: https://get.docker.com
+        dest: /tmp/get-docker.sh
+        mode: "0755"
+      args:
+        creates: /tmp/get-docker.sh
+
     - name: Install Docker Engine
-      shell: |
-        curl -fsSL https://get.docker.com -o get-docker.sh
-        sh get-docker.sh
+      ansible.builtin.command: /tmp/get-docker.sh
       args:
         creates: /usr/bin/docker
+      changed_when: false
 
     - name: Add devops user to docker group
-      user:
+      ansible.builtin.user:
         name: devops
         groups: docker
-        append: yes
+        append: true
+
+    - name: Download K3s installation script
+      ansible.builtin.get_url:
+        url: https://get.k3s.io
+        dest: /tmp/get-k3s.sh
+        mode: "0755"
+      args:
+        creates: /tmp/get-k3s.sh
 
     - name: Install K3s
-      shell: curl -sfL https://get.k3s.io | sh -
+      ansible.builtin.command: /tmp/get-k3s.sh
       args:
         creates: /usr/local/bin/k3s
+      changed_when: false
 
     - name: Configure kubectl for devops user
-      shell: |
+      ansible.builtin.shell: |
         mkdir -p /home/devops/.kube
         cp /etc/rancher/k3s/k3s.yaml /home/devops/.kube/config
         chown devops:devops /home/devops/.kube/config
@@ -88,4 +104,5 @@
 
   handlers:
     - name: Apply netplan
-      command: netplan apply
+      ansible.builtin.command: netplan apply
+      changed_when: false

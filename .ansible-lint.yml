@@ -1,0 +1,10 @@
+---
+# Конфигурация ansible-lint
+# Документация: https://ansible.readthedocs.io/projects/lint/configuring/
+
+# Используем production профиль
+profile: production
+
+# Игнорируем конкретные правила, если нужно
+# skip_list:
+#   - name[casing]
