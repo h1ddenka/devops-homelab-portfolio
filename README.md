@@ -16,6 +16,21 @@
 - [x] Stage 02: Git & Networking
 - [x] Stage 03: Docker
 - [x] Stage 04: Kubernetes
-- [ ] Stage 05: IaC (Ansible, Terraform)
-- [ ] Stage 06: CI/CD (GitHub Actions)
+- [x] Stage 05: IaC (Ansible)
+- [x] Stage 06: CI/CD (GitHub Actions)
 - [ ] Stage 07: Monitoring (Prometheus, Grafana)
+
+## CI/CD Pipeline
+
+Проект использует GitHub Actions для автоматизации проверки кода при каждом Push или Pull Request в ветку `main`.
+
+### Этапы пайплайна (`.github/workflows/ci-cd.yml`)
+
+| Job | Шаг | Инструмент | Что проверяет |
+|-----|-----|-----------|---------------|
+| Lint Infrastructure Code | Lint Ansible playbooks | ansible-lint (profile: production) | FQCN, идемпотентность |
+| Lint Infrastructure Code | Lint Dockerfile | hadolint | Безопасность и оптимальность Dockerfile |
+| Build and Validate Manifests | Build Docker image | Docker Buildx | Корректность сборки образа |
+| Build and Validate Manifests | Validate Kubernetes manifests | kubeconform (strict) | Валидность K8s манифестов против официальных схем |
+
+Статус пайплайна: [![CI/CD](https://github.com/hiddenka/devops-homelab-portfolio/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/hiddenka/devops-homelab-portfolio/actions/workflows/ci-cd.yml)
