@@ -16,7 +16,7 @@ jobs:
 
       - name: Install Ansible collections
         run: |
-          ansible-galaxy collection install community.general
+          ansible-galaxy collection install -r stage-05-iac/ansible/requirements.yml
 
       - name: Lint Ansible playbooks
         uses: ansible/ansible-lint@main
