@@ -42,8 +42,8 @@
         mode: '0600'
       notify: Apply netplan
 
-    - name: Configure UFW firewall rules
-      ufw:
+      - name: Configure UFW firewall rules
+      community.general.ufw:
         rule: allow
         port: "{{ item }}"
         proto: tcp
@@ -53,6 +53,11 @@
         - 443
         - 30080
         - 8080
+
+    - name: Enable UFW with default deny policy
+      community.general.ufw:
+        state: enabled
+        policy: deny
 
     - name: Enable UFW with default deny policy
       ufw:
