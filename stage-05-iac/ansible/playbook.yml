@@ -59,11 +59,6 @@
         state: enabled
         policy: deny
 
-    - name: Enable UFW with default deny policy
-      ufw:
-        state: enabled
-        policy: deny
-
     - name: Install Docker Engine
       shell: |
         curl -fsSL https://get.docker.com -o get-docker.sh
