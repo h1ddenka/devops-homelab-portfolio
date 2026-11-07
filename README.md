@@ -33,4 +33,4 @@
 | Build and Validate Manifests | Build Docker image | Docker Buildx | Корректность сборки образа |
 | Build and Validate Manifests | Validate Kubernetes manifests | kubeconform (strict) | Валидность K8s манифестов против официальных схем |
 
-Статус пайплайна: [![CI/CD](https://github.com/hiddenka/devops-homelab-portfolio/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/hiddenka/devops-homelab-portfolio/actions/workflows/ci-cd.yml)
+Статус пайплайна: [![CI/CD](https://github.com/h1ddenka/devops-homelab-portfolio/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/h1ddenka/devops-homelab-portfolio/actions/workflows/ci-cd.yml)
