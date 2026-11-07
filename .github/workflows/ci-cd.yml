@@ -48,7 +48,14 @@ jobs:
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
 
+      - name: Install kubeconform
+        run: |
+          curl -L -o kubeconform.tar.gz https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
+          tar xzf kubeconform.tar.gz
+          sudo mv kubeconform /usr/local/bin/
+          rm kubeconform.tar.gz
+
       - name: Validate Kubernetes manifests
         run: |
-          echo "Validating Kubernetes manifests..."
-          kubectl apply --dry-run=client -f stage-04-kubernetes/manifests/
+          echo "Validating Kubernetes manifests with kubeconform..."
+          kubeconform -strict -summary stage-04-kubernetes/manifests/
