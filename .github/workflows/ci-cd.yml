@@ -1,4 +1,4 @@
-name: CI/CD Pipeline devops lab
+name: CI/CD Pipeline
 
 on:
   push:
@@ -10,18 +10,23 @@ jobs:
   lint:
     name: Lint Infrastructure Code
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: stage-05-iac/ansible
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install Ansible collections
         run: |
-          ansible-galaxy collection install -r stage-05-iac/ansible/requirements.yml
+          ansible-galaxy collection install -r requirements.yml \
+            -p ./collections \
+            --force
 
       - name: Lint Ansible playbooks
         uses: ansible/ansible-lint@main
         with:
-          args: stage-05-iac/ansible/playbook.yml
+          args: playbook.yml
 
       - name: Lint Dockerfile
         uses: hadolint/hadolint-action@v3.1.0
