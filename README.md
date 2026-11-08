@@ -18,7 +18,7 @@
 - [x] Stage 04: Kubernetes
 - [x] Stage 05: IaC (Ansible)
 - [x] Stage 06: CI/CD (GitHub Actions)
-- [ ] Stage 07: Monitoring (Prometheus, Grafana)
+- [x] Stage 07: Monitoring (Prometheus, Grafana)
 
 ## CI/CD Pipeline
 
