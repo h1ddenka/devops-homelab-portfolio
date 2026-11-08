@@ -1,0 +1,6 @@
+# Секреты и пароли
+.env
+
+# Данные Docker volumes
+*.db
+*.sqlite
